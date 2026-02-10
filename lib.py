@@ -4,11 +4,11 @@ import re
 brightnessLevels = [1, 70, 150, 254]
 
 def pairLight(id: int):
-    os.system(f'chip-tool pairing ble-wifi {id} "FRITZ!Box 7590 AMCON" 71236146737919943481 33374968 2661 --paa-trust-store-path ~/connectedhomeip/credentials/production/paa-root-certs/')
+    os.system(f'chip-tool pairing ble-wifi {id} "Kek" test1234 33374968 2661 --paa-trust-store-path ~/connectedhomeip/credentials/production/paa-root-certs/')
               
 
 def pairPlug(id: int):
-    os.system(f'chip-tool pairing ble-wifi {id} "FRITZ!Box 7590 AMCON" 71236146737919943481 40527157 200 --paa-trust-store-path ~/connectedhomeip/credentials/production/paa-root-certs/')
+    os.system(f'chip-tool pairing ble-wifi {id} "Kek" test1234 40527157 200 --paa-trust-store-path ~/connectedhomeip/credentials/production/paa-root-certs/')
 
 
 def toggle(id: int):
