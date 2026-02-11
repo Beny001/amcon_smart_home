@@ -51,7 +51,6 @@ def addDevice(name, type: DeviceType, nodeid: int | None = None, status: DeviceS
         else:
             raise HTTPException(status_code=400, detail="DeviceType not supported")
 
-
     id = str(uuid.uuid4())
     device = Device(id, name, type, nodeid, status, brightness, color)
     devicelist[id] = device
@@ -72,7 +71,7 @@ def toggle(id):
         device.status = DeviceStatus.on
     else:
          device.status = DeviceStatus.off
-    return
+    return device
 
 
 @app.post("/change-color")

@@ -1,25 +1,66 @@
 import os
 import re
+import subprocess
 
 brightnessLevels = [1, 70, 150, 254]
 
+CHIP_TOOL = "../connectedhomeip/out/chip-tool"
+PAA_PATH = os.path.join(
+    os.environ["HOME"],
+    "connectedhomeip/credentials/production/paa-root-certs/"
+)
+
+def run_cmd(args):
+    result = subprocess.run(args, check=True)
+    return result.returncode
+
+
 def pairLight(id: int):
-    os.system(f'../connectedhomeip/out/chip-tool pairing ble-wifi {id} Kek test1234 33374968 2661 --paa-trust-store-path ~/connectedhomeip/credentials/production/paa-root-certs/')
-              
+    run_cmd([
+        CHIP_TOOL, "pairing", "ble-wifi",
+        str(id),
+        "Kek",
+        "test1234",
+        "33374968",
+        "2661",
+        "--paa-trust-store-path",
+        PAA_PATH
+    ])
+
 
 def pairPlug(id: int):
-    os.system(f'../connectedhomeip/out/chip-tool pairing ble-wifi {id} Kek test1234 40527157 200 --paa-trust-store-path ~/connectedhomeip/credentials/production/paa-root-certs/')
+    run_cmd([
+        CHIP_TOOL, "pairing", "ble-wifi",
+        str(id),
+        "Kek",
+        "test1234",
+        "40527157",
+        "200",
+        "--paa-trust-store-path",
+        PAA_PATH
+    ])
 
 
 def toggle(id: int):
-    os.system(f'chip-tool onoff toggle {id} 1')
+    run_cmd([CHIP_TOOL, "onoff", "toggle", str(id), "1"])
 
 
 def changeBrightness(id: int, level: int):
-    os.system(f'chip-tool levelcontrol move-to-level {brightnessLevels[level]} 0 0 0 {id} 1')
+    run_cmd([
+        CHIP_TOOL, "levelcontrol", "move-to-level",
+        str(brightnessLevels[level]),
+        "0", "0", "0",
+        str(id), "1"
+    ])
+
 
 def changeActionMode(id: int, mode: int):
-    os.system(f'chip-tool modeselect change-to-mode {mode} {id} 1')
+    run_cmd([
+        CHIP_TOOL, "modeselect", "change-to-mode",
+        str(mode),
+        str(id), "1"
+    ])
+
 
 def changeColor(id: int, hex: str):
     match = re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', hex)
@@ -53,4 +94,11 @@ def changeColor(id: int, hex: str):
 
         hue = round(hs[0] / 360 * 254)
         saturation = round(hs[1] / 100 * 254)
-        os.system(f'chip-tool colorcontrol move-to-hue-and-saturation {hue} {saturation} 0 0 0 {id} 1')
+
+        run_cmd([
+            CHIP_TOOL, "colorcontrol", "move-to-hue-and-saturation",
+            str(hue),
+            str(saturation),
+            "0", "0", "0",
+            str(id), "1"
+        ])
