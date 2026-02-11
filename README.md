@@ -22,7 +22,7 @@ After that you can install the dependencies using
 pip install --no-index --find-links deps -r requirements.txt
 ```
 ## Swagger UI
-[Swagger ui from the Webserver](https://sharolyn-windtight-dismissively.ngrok-free.dev/docs)_
+[Backend API Docs](https://sharolyn-windtight-dismissively.ngrok-free.dev/docs)
 
 ## Endpoints
 ```bash
