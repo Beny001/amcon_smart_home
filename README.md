@@ -22,9 +22,8 @@ After that you can install the dependencies using
 pip install --no-index --find-links deps -r requirements.txt
 ```
 ## Swagger UI
-```bash
-https://sharolyn-windtight-dismissively.ngrok-free.dev/docs
-```
+[Swagger ui from the Webserver](https://sharolyn-windtight-dismissively.ngrok-free.dev/docs)_
+
 ## Endpoints
 ```bash
 https://sharolyn-windtight-dismissively.ngrok-free.dev/add-device?name=<name>&type=<light or plug>&status=<on or off or offline>&brightness=1&color=%23<hex color>
