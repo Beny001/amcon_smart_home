@@ -14,7 +14,6 @@ def run_cmd(args):
     result = subprocess.run(args, check=True)
     return result.returncode
 
-
 def pairLight(id: int):
     run_cmd([
         CHIP_TOOL, "pairing", "ble-wifi",
@@ -26,7 +25,6 @@ def pairLight(id: int):
         "--paa-trust-store-path",
         PAA_PATH
     ])
-
 
 def pairPlug(id: int):
     run_cmd([
@@ -40,10 +38,8 @@ def pairPlug(id: int):
         PAA_PATH
     ])
 
-
 def toggle(id: int):
     run_cmd([CHIP_TOOL, "onoff", "toggle", str(id), "1"])
-
 
 def changeBrightness(id: int, level: int):
     run_cmd([
@@ -53,14 +49,12 @@ def changeBrightness(id: int, level: int):
         str(id), "1"
     ])
 
-
 def changeActionMode(id: int, mode: int):
     run_cmd([
         CHIP_TOOL, "modeselect", "change-to-mode",
         str(mode),
         str(id), "1"
     ])
-
 
 def changeColor(id: int, hex: str):
     match = re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', hex)

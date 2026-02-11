@@ -5,9 +5,7 @@ import uuid
 import lib 
 import random
 
-
 devicelist = {}
-
 
 class DeviceType(Enum):
     light = "light"
@@ -18,7 +16,6 @@ class DeviceStatus(Enum):
     on = "on"
     off = "off"
     offline = "offline"
-
 
 class Device:
     def __init__(self, id, name, type, nodeid, status=DeviceStatus.on, brightness=3, color="#da1195", actionmode=0 ):
@@ -31,14 +28,11 @@ class Device:
         self.nodeid = nodeid
         self.actionmode = actionmode
 
-
 app = FastAPI()
-
 
 @app.get("/")
 def root():
     return {"status": "ok"}
-
 
 @app.post("/add-device")
 def addDevice(name, type: DeviceType, nodeid: int | None = None, status: DeviceStatus = DeviceStatus.off, brightness: int = 1, color: str = "#ffffff"):
@@ -56,11 +50,9 @@ def addDevice(name, type: DeviceType, nodeid: int | None = None, status: DeviceS
     devicelist[id] = device
     return device
 
-
 @app.get("/get-devices")
 def getDevices():
     return {"devices": [device.__dict__ for device in devicelist.values()]}
-
 
 @app.post("/toggle")
 def toggle(id):
@@ -73,7 +65,6 @@ def toggle(id):
          device.status = DeviceStatus.off
     return device
 
-
 @app.post("/change-color")
 def changeColor(id, color):
     nodeid = devicelist[id].nodeid
@@ -81,13 +72,11 @@ def changeColor(id, color):
     devicelist[id].color = color
     return
 
-
 @app.post("/change-name")
 def changeName(id, targetname):
     nodeid = devicelist[id].nodeid
     devicelist[id].name = targetname
     return
-
 
 @app.post("/change-brightness")
 def changeBrightness(id, brightnesslevel: int):
@@ -96,7 +85,6 @@ def changeBrightness(id, brightnesslevel: int):
     devicelist[id].brightness = lib.brightnessLevels[brightnesslevel]
     return
 
-
 @app.delete("/delete-device")
 def deleteDevice(id):
     nodeid = devicelist[id].nodeid
@@ -104,14 +92,12 @@ def deleteDevice(id):
         del devicelist[id]
     return
 
-
 @app.post("/change-actionmode")
 def changeActionMode(id, actionmode: int):
     nodeid = devicelist[id].nodeid
     lib.changeActionMode(nodeid, actionmode)
     devicelist[id].actionmode = actionmode
     return
-
 
 app.add_middleware(
     CORSMiddleware,
